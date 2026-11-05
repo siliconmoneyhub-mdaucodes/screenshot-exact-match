@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { products } from "./data";
 
 export const roles = [
   { id: "guest", label: "Guest", destination: "/" },
@@ -43,11 +44,12 @@ export function DemoProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<StoreContextValue>(() => {
     const addToBag = (productId: string, quantity = 1) => {
-      if (!Number.isFinite(quantity) || quantity < 1) return;
+      if (!products.some((product) => product.id === productId) || !Number.isFinite(quantity) || quantity < 1) return;
       setBag((current) => ({ ...current, [productId]: (current[productId] ?? 0) + quantity }));
     };
     const setBagQuantity = (productId: string, quantity: number) => {
       setBag((current) => {
+        if (!(productId in current)) return current;
         if (quantity < 1) {
           const next = { ...current };
           delete next[productId];
@@ -79,7 +81,10 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       savedOnly,
       setSavedOnly,
       bagCount: Object.values(bag).reduce((sum, quantity) => sum + quantity, 0),
-      bagTotal: 0,
+      bagTotal: Object.entries(bag).reduce((sum, [productId, quantity]) => {
+        const product = products.find((entry) => entry.id === productId);
+        return sum + (product?.price ?? 0) * quantity;
+      }, 0),
     };
   }, [role, bag, saved, categoryFilter, searchTerm, savedOnly]);
 
