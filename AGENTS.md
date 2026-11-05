@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project architecture
+- Keep the UKEN clickable mockup's product and maker catalogue in a dedicated front-end data module and share demo shopping state through a root-mounted React context, so the sample experience remains consistent across routes without a backend.

@@ -1,3 +1,3 @@
-- [ ] Build shared UKEN demo state, mock data, design tokens, and role-aware storefront shell.
+- [x] Build shared UKEN demo state, mock data, design tokens, and role-aware storefront shell.
 - [ ] Implement home, shop, product details, makers, and story views with working mock interactions.
 - [ ] Verify route/test behavior and 375px and desktop shopping flows; resolve any issues.
